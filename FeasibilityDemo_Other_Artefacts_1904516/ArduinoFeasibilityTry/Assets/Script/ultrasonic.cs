@@ -14,37 +14,40 @@ public class ultrasonic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //InvokeRepeating("MoveSensor", 0.0f, 0.0f);
+        
         serial.Open(); //Opens a new serial port connection
     }
 
     // Update is called once per frame
     void Update()
     {
-       // MoveSensor();
-        //Debug.Log("message");//MoveSensor function is called
+        MoveSensor();
+        
 
-        InvokeRepeating("MoveSensor", 0.0f, 0.0f);
+       // InvokeRepeating("MoveSensor", 0.0f, 0.0f);
     }
 
     void MoveSensor()
     {
-        Vector3 pos = transform.position; //Sends position of object in the editor for scriptable
+        
 
         if(serial.IsOpen) //Gets a value indicating the open or closed status of the SerialPort object
         {
-            try
-            {
+           // try
+            //{
                 float data = int.Parse(serial.ReadLine()); //Reads value in the input buffer and returns string
-                data = Mathf.Clamp(data, 5, 80); //Clamps the obejct in te specified values
-                data = ((((data - 5) / 25) * 9) + 3); 
+                data = Mathf.Clamp(data, 0, 50); //Clamps the obejct in the specified values. Taking data variable which has the value from the calculation by the sensor
                 transform.position = new Vector3(0, (int)data, 0);
-            }
-            catch(System.Exception)
-            {
-                Debug.Log("Exception");
-            }
+           // }
+           // catch(System.Exception)
+           // {
+               // Debug.Log("Exception");
+           // }
 
         }
     }
 }
+
+
+
+// data = ((((data - 5) / 25) * 9) + 3); 
